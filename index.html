@@ -1,48 +1,113 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bit英単語テスト</title>
-  <style>
-    /* 以前提案したCSSの内容をここにすべてコピー＆ペーストする */
-    body {
-        font-family: sans-serif;
-        line-height: 1.6;
-        margin: 40px auto;
-        max-width: 800px;
-        padding: 0 20px;
-        background-color: #f8f8f8;
-        color: #333;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bit英単語テスト</title>
+    <style>
+        /* 新しいシンプルでカラフルなスタイル */
+        :root {
+            /* カラースキーム */
+            --color-primary: #FF5733; /* メインカラー（オレンジレッド系） */
+            --color-secondary: #33C7FF; /* アクセントカラー（明るいブルー系） */
+            --color-success: #4CAF50; /* 学習モード（グリーン） */
+            --color-info: #FFC300; /* リストモード（イエロー） */
+            --color-add: #900C3F; /* 追加モード（深めのレッド/パープル） */
+            --color-background: #FFFFFF; /* 背景色 */
+            --color-text: #333333; /* テキスト色 */
+            --color-light-gray: #EEEEEE; /* 境界線など */
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    h1 {
-        color: #007bff;
-        border-bottom: 2px solid #eee;
-        padding-bottom: 10px;
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0; /* マージンをリセット */
+            padding: 20px;
+            max-width: 600px; /* 少し狭くしてモバイルフレンドリーに */
+            margin: 40px auto;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            box-shadow: var(--shadow-light); /* メインコンテンツに影を追加 */
+            border-radius: 10px;
+        }
 
-    nav button {
-        background-color: #6c757d;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    /* ... 他のすべてのCSSルールをここに記述 ... */
-  </style>
-  
-  <script src="app.js" defer></script>
+        h1 {
+            color: var(--color-primary);
+            font-size: 1.8em;
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--color-light-gray);
+        }
+
+        nav {
+            display: flex; /* ボタンを横に並べる */
+            gap: 10px; /* ボタン間のスペース */
+            margin-bottom: 30px;
+            justify-content: center; /* ボタンを中央に寄せる */
+        }
+
+        nav button {
+            flex-grow: 1; /* ボタンの幅を均等にする */
+            max-width: 150px;
+            color: white;
+            border: none;
+            padding: 12px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s; /* ホバーエフェクト */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        nav button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* モードごとのボタンの色設定 */
+        #modeLearn {
+            background-color: var(--color-success);
+        }
+
+        #modeList {
+            background-color: var(--color-info);
+        }
+
+        #modeAdd {
+            background-color: var(--color-add);
+        }
+
+        /* 現在アクティブなモードのボタン（例として学習モードをアクティブに） */
+        #modeLearn.active {
+            outline: 4px solid var(--color-primary);
+            outline-offset: -2px;
+        }
+
+        #view {
+            min-height: 150px; /* メインコンテンツエリアの最低限の高さ */
+            padding: 15px;
+            border: 1px dashed var(--color-light-gray);
+            border-radius: 5px;
+            text-align: center;
+            color: #666;
+        }
+
+    </style>
+
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <h1 style="color: #007bff; border-bottom: 2px solid #eee;">Bit英単語テスト </h1>
+    <h1>Bit英単語テスト</h1>
     <nav>
-      <button id="modeLearn" style="background-color: #28a745; color: white;">学習</button> 
-      <button id="modeList" style="background-color: gray; color: white;">リスト</button>
-      <button id="modeAdd" style="background-color: gray; color: white;">追加</button>
+        <button id="modeLearn" class="active">学習</button>
+        <button id="modeList">リスト</button>
+        <button id="modeAdd">追加</button>
     </nav>
-  <main id="view"></main>
+    <main id="view">
+        <p>↑ボタンを押してモードを選択してください↑</p>
+    </main>
 </body>
 </html>
