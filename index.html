@@ -4,10 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Bit英単語テスト</title>
+  
+  <style>
+    /* 以前提案したCSSの内容をここにすべてコピー＆ペーストする */
+    body {
+        font-family: sans-serif;
+        line-height: 1.6;
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 0 20px;
+        background-color: #f8f8f8;
+        color: #333;
+    }
+
+    h1 {
+        color: #007bff;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    nav button {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    /* ... 他のすべてのCSSルールをここに記述 ... */
+  </style>
+  
   <script src="app.js" defer></script>
 </head>
 <body>
-  <h1>Bit英単語テスト  </h1>
+  <h1>Bit英単語テスト </h1>
   <nav>
     <button id="modeLearn">学習</button>
     <button id="modeList">リスト</button>
@@ -16,3 +47,9 @@
   <main id="view"></main>
 </body>
 </html>
+<h1 style="color: #007bff; border-bottom: 2px solid #eee;">Bit英単語テスト </h1>
+<nav>
+  <button id="modeLearn" style="background-color: #28a745; color: white;">学習</button> 
+  <button id="modeList" style="background-color: gray; color: white;">リスト</button>
+  <button id="modeAdd" style="background-color: gray; color: white;">追加</button>
+</nav>
