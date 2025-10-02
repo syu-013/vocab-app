@@ -1,172 +1,72 @@
-<!doctype html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Bit英単語テスト | 英単語学習アプリ</title> <style>
-        /* 新しいシンプルでカラフルなスタイル */
-        :root {
-            /* カラースキーム */
-            --color-primary: #FF5733; /* メインカラー（オレンジレッド系） */
-            --color-secondary: #33C7FF; /* アクセントカラー（明るいブルー系） */
-            --color-success: #4CAF50; /* 学習モード（グリーン） */
-            --color-info: #FFC300; /* リストモード（イエロー） */
-            --color-add: #900C3F; /* 追加モード（深めのレッド/パープル） */
-            --color-background: #FFFFFF; /* 背景色 */
-            --color-text: #333333; /* テキスト色 */
-            --color-light-gray: #EEEEEE; /* 境界線など */
-            --color-dark-gray: #666666; /* サブテキスト色 */
-            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-button: 0 2px 4px rgba(0, 0, 0, 0.2); /* ボタン専用の影 */
-        }
-
-        /* ------------------------------------- */
-        /* グローバルスタイル */
-        /* ------------------------------------- */
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0; /* マージンをリセット */
-            background-color: var(--color-light-gray); /* 背景色を少し変えて本体を際立たせる */
-        }
-
-        .app-container {
-            padding: 20px;
-            max-width: 600px; /* 少し狭くしてモバイルフレンドリーに */
-            margin: 40px auto;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            box-shadow: var(--shadow-light); /* メインコンテンツに影を追加 */
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: var(--color-primary);
-            font-size: 1.8em;
-            text-align: center;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            border-bottom: 3px solid var(--color-light-gray);
-        }
-
-        /* ------------------------------------- */
-        /* ナビゲーションスタイル */
-        /* ------------------------------------- */
-
-        nav {
-            display: flex; /* ボタンを横に並べる */
-            gap: 10px; /* ボタン間のスペース */
-            margin-bottom: 30px;
-            justify-content: center; /* ボタンを中央に寄せる */
-        }
-
-        nav button {
-            flex-grow: 1; /* ボタンの幅を均等にする */
-            max-width: 150px;
-            color: white;
-            border: none;
-            padding: 12px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1em; /* フォントサイズ指定 */
-            transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s; /* ホバーエフェクト */
-            box-shadow: var(--shadow-button);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        nav button:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        /* モードごとのボタンの色設定 */
-        #modeLearn { background-color: var(--color-success); }
-        #modeList { background-color: var(--color-info); }
-        #modeAdd { background-color: var(--color-add); }
-
-        /* 現在アクティブなモードのボタン */
-        .mode-button.active {
-            outline: 4px solid var(--color-primary);
-            outline-offset: -2px;
-            transform: translateY(0); /* アクティブ時は移動をリセット */
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* 凹んだように見せる */
-        }
-
-        /* ------------------------------------- */
-        /* メインコンテンツスタイル */
-        /* ------------------------------------- */
-
-        #view {
-            min-height: 250px; /* メインコンテンツエリアの最低限の高さを見やすく調整 */
-            padding: 15px;
-            border: 1px dashed var(--color-light-gray);
-            border-radius: 5px;
-            text-align: center;
-            background-color: var(--color-light-gray); /* 背景色を設定 */
-        }
-
-        .placeholder-content {
-            margin: 50px auto;
-            color: var(--color-dark-gray);
-            font-size: 1.1em;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .placeholder-content h2 {
-            margin-top: 0;
-            color: var(--color-primary);
-            font-size: 1.4em;
-        }
-        
-        /* ------------------------------------- */
-        /* フッタースタイル */
-        /* ------------------------------------- */
-        
-        footer {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid var(--color-light-gray);
-            text-align: center;
-            font-size: 0.85em;
-            color: var(--color-dark-gray);
-        }
-        
-        #statusMessage {
-            min-height: 20px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-    </style>
-
-    <script src="app.js" defer></script>
-</head>
-<body>
-    <div class="app-container">
-        <header> <h1>Bit英単語テスト</h1>
-        </header>
-
-        <nav role="navigation"> <button id="modeLearn" class="mode-button active" aria-label="英単語学習モードに切り替える">学習</button>
-            <button id="modeList" class="mode-button" aria-label="単語リスト閲覧モードに切り替える">リスト</button>
-            <button id="modeAdd" class="mode-button" aria-label="単語追加モードに切り替える">追加</button>
-        </nav>
-        
-        <main id="view" role="region" aria-live="polite"> <div class="placeholder-content" id="initialViewContent">
-                <h2>📚 ようこそ！</h2>
-                <p>上のボタンを押して、学習モード、リストモード、または追加モードを選択してください。</p>
-                <p style="font-size: 0.9em; margin-top: 20px;">（現在の単語数：100語）</p> </div>
+<style>
+    /* ... (既存のスタイルは省略) ... */
+    
+            /* ------------------------------------- */
+            /* メインコンテンツスタイル */
+            /* ------------------------------------- */
+    
+            /* ... (既存の #view スタイルは省略) ... */
+    
+            /* フォーム要素の共通スタイル (app.jsに合わせて調整) */
+            input[type="text"] {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin: 8px 0 15px 0; /* 下マージンを少し増やしてボタンと離す */
+                display: inline-block;
+                border: 1px solid var(--color-light-gray);
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 1em;
+                text-align: center; /* 入力を中央寄せ */
+            }
+    
+            /* アクションボタンの共通スタイル */
+            .action-button {
+                /* ... (既存のスタイルは省略) ... */
+                margin: 10px 5px; /* ボタン間のスペースを確保 */
+                min-width: 120px;
+            }
             
-            </main>
-        
-        <footer> <div id="statusMessage">準備完了 ✅</div>
-            <p>&copy; 2025 Bit English Test App</p>
-        </footer>
-    </div>
-</body>
-</html>
+            .action-button:disabled {
+                background-color: var(--color-light-gray);
+                color: var(--color-dark-gray);
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+    
+            /* 学習モードのスタイル */
+            .learn-view {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            .learn-view h2.word-display {
+                font-size: 2.5em;
+                color: var(--color-primary);
+                margin-bottom: 20px;
+            }
+            
+            .learn-view .instruction {
+                color: var(--color-dark-gray);
+                font-size: 0.9em;
+                margin-bottom: 5px;
+            }
+    
+            .feedback-message {
+                margin-top: 15px;
+                font-weight: bold;
+                min-height: 20px;
+                /* ❌の場合のスタイルも追加 */
+            }
+            
+            .feedback-message.correct {
+                color: var(--color-success);
+            }
+            
+            .feedback-message.incorrect {
+                color: var(--color-primary); /* 不正解はメインカラーの赤系に */
+            }
+            
+    /* ... (他のスタイルは省略) ... */
+    </style>
